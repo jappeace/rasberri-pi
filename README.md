@@ -14,8 +14,7 @@ nix build -L .#nixosConfigurations.zero2w.config.system.build.sdImage
 3. Copy the image in your sd card
 
 ```sh
-DEVICE=/dev/disk5 # Whatever your sd card reader is
-sudo dd if=result/sd-image/zero2.img of=$DEVICE bs=1M conv=fsync status=progress
+sudo cp result/sd-image/zero2.img /dev/SDCARD
 ```
 
 4. Boot your Zero
@@ -30,6 +29,8 @@ ifconfig wlan0
 ZERO2_IP=<the-zero2-ip>
 SSH_USER=<the-admin-user-in-the-pi>
 nix run github:serokell/deploy-rs .#zero2w -- --ssh-user $SSH_USER --hostname $ZERO2_IP
+
+nixos-rebuild switch --flake .#zero2w --target-host root@$(IP) --build-host localhost --show-trace
 ```
 
 ## Notes
