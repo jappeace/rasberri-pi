@@ -1,4 +1,6 @@
 # Building a NixOS SD image for a Raspberry Pi Zero 2 w
+modified to cross compiled, well a WIP I guess.
+original used a mac to build everything
 
 1. Update `zero2w.nix`
 
