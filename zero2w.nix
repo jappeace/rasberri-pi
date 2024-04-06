@@ -57,14 +57,16 @@
   };
 
   networking = {
-    interfaces."wlan0".useDHCP = true;
+    # interfaces."wlan0".useDHCP = true;
+    # http://192.168.0.1/webpages/index.1505201829667.html
+    interfaces."wlan0".ipv4.addresses = "192.168.0.2";
     wireless = {
       enable = true;
       interfaces = ["wlan0"];
       # ! Change the following to connect to your own network
       networks = {
-        "<ssid>" = {
-          psk = "<ssid-key>";
+        "https://jappie.me" = {
+          psk = "jappiejappie";
         };
       };
     };
