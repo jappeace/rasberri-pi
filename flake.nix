@@ -18,6 +18,7 @@
     inherit cross;
     nixosConfigurations = {
       zero2w = nixpkgs.lib.nixosSystem {
+        system = "aarch64-multiplatform";
         pkgs = cross;
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
