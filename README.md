@@ -44,3 +44,7 @@ nixos-rebuild switch --flake .#zero2w --target-host root@$(IP) --build-host loca
 - [this issue](https://github.com/NixOS/nixpkgs/issues/216886)
 - [this gist](https://gist.github.com/plmercereau/0c8e6ed376dc77617a7231af319e3d29)
 
+
+
+https://github.com/NixOS/nixpkgs/blob/e5db80ae487b59b4e9f950d68983ffb0575e26c6/nixos/lib/eval-config.nix
+https://github.com/NixOS/nixpkgs/blob/e5db80ae487b59b4e9f950d68983ffb0575e26c6/nixos/modules/installer/sd-card/sd-image-aarch64.nix
