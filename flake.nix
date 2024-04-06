@@ -10,9 +10,15 @@
     self,
     nixpkgs,
     deploy-rs,
-  }: rec {
+  }:
+    let
+      cross = nixpkgs.legacyPackages.x86_64-linux.pkgsCross."aarch64-multiplatform";
+    in
+    {
+    inherit cross;
     nixosConfigurations = {
       zero2w = nixpkgs.lib.nixosSystem {
+        pkgs = cross;
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ./zero2w.nix
@@ -20,15 +26,5 @@
       };
     };
 
-    deploy = {
-      user = "root";
-      nodes = {
-        zero2w = {
-          hostname = "zero2w";
-          profiles.system.path =
-            deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.zero2w;
-        };
-      };
-    };
   };
 }

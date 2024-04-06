@@ -1,8 +1,7 @@
-{
-  lib,
-  modulesPath,
-  pkgs,
-  ...
+{ lib
+, modulesPath
+, pkgs
+, ...
 }: {
   imports = [
     ./sd-image.nix
@@ -10,7 +9,7 @@
 
   nixpkgs.hostPlatform = "aarch64-linux";
   # ! Need a trusted user for deploy-rs.
-  nix.settings.trusted-users = ["@wheel"];
+  nix.settings.trusted-users = [ "@wheel" ];
   system.stateVersion = "23.11";
 
   zramSwap = {
@@ -39,13 +38,13 @@
 
   # Keep this to make sure wifi works
   hardware.enableRedistributableFirmware = lib.mkForce false;
-  hardware.firmware = [pkgs.raspberrypiWirelessFirmware];
+  hardware.firmware = [ pkgs.raspberrypiWirelessFirmware ];
 
   boot = {
     # TODO doesn't work
     # kernelPackages = pkgs.linuxKernel.packages.linux_rpi3;
 
-    initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage"];
+    initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -59,10 +58,13 @@
   networking = {
     # interfaces."wlan0".useDHCP = true;
     # http://192.168.0.1/webpages/index.1505201829667.html
-    interfaces."wlan0".ipv4.addresses = "192.168.0.2";
+    interfaces."wlan0".ipv4.addresses = [{
+      address = "192.168.0.2";
+      prefixLength = 24;
+    }];
     wireless = {
       enable = true;
-      interfaces = ["wlan0"];
+      interfaces = [ "wlan0" ];
       # ! Change the following to connect to your own network
       networks = {
         "https://jappie.me" = {
@@ -83,7 +85,7 @@
     isNormalUser = true;
     home = "/home/bob";
     description = "jappie";
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = [ "wheel" "networkmanager" ];
     # ! Be sure to put your own public key here
     openssh.authorizedKeys.keys = (import ./encrypted/keys.nix { });
   };
