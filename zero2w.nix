@@ -8,6 +8,10 @@
   ];
 
   nixpkgs.hostPlatform = "aarch64-linux";
+  nixpkgs.overlays = [(final: prev: {
+    ubootRaspberryPi3_64bit = prev.ubootRaspberryPi3_64bit.override { crossTools = true ; nativeBuildInputs = prev.ubootRaspberryPi3_64bit.nativeBuildInputs ++ [ prev.openssl ]; } ;
+  } )];
+
   # ! Need a trusted user for deploy-rs.
   nix.settings.trusted-users = [ "@wheel" ];
   system.stateVersion = "23.11";
